@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSE Client</title>
+</head>
+<body>
+    <p>Message: </p>
+    <div id="data"></div>
+
+    <script>
+        const sseEndpoint = 'http://127.0.0.1:8989/events';
+
+        const eventSource = new EventSource(sseEndpoint);
+
+        eventSource.onmessage = function (event) {
+            const dataDiv = document.getElementById('data');
+            dataDiv.innerHTML += `<p>${event.data}</p>`;
+        };
+
+        eventSource.onerror = function (event) {
+            console.error('SSE Error:', event);
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>
